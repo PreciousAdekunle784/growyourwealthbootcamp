@@ -1,0 +1,177 @@
+---
+import { Image } from 'astro:assets';
+import badge from '../assets/img/nrc-badge.png';
+import { brand, contact, earningsDisclaimer, legalLinks, socials } from '../config/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer on-ink">
+  <div class="wrap">
+    <p class="footer__mark display" aria-hidden="true">Grow Your <em>Wealth</em></p>
+
+    <div class="footer__grid">
+      <div class="footer__intro">
+        <Image src={badge} alt="Noelle Randall Coaching, Winning in Real Estate" width={88} height={88} class="footer__badge" />
+        <p>A one-day bootcamp from {brand.parentBrand}: set up the business, build the credit, secure the funding.</p>
+      </div>
+
+      <nav aria-label="Bootcamp">
+        <h2 class="mono footer__h">The bootcamp</h2>
+        <ul role="list">
+          <li><a href="/#method">The method</a></li>
+          <li><a href="/#watch">Watch</a></li>
+          <li><a href="/#tickets">Tickets</a></li>
+          <li><a href="/#questions">Questions</a></li>
+          <li><a href="/#waitlist">Join the waitlist</a></li>
+          <li><a href="/about">About Noelle</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="mono footer__h">Support</h2>
+        <ul role="list">
+          <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+          <li><a href={contact.phoneHref}>{contact.phoneDisplay}</a></li>
+          <li><a href="/support">Support centre</a></li>
+        </ul>
+        <address class="footer__addr">
+          {contact.mail.map((l) => <span>{l}</span>)}
+        </address>
+      </div>
+
+      <nav aria-label="Social">
+        <h2 class="mono footer__h">Follow</h2>
+        <ul role="list">
+          {
+            socials.map((s) => (
+              <li>
+                <a href={s.href} target="_blank" rel="noopener">
+                  {s.label}
+                  <span class="visually-hidden"> (opens in a new tab)</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <hr class="rule" />
+
+    <div class="footer__legal">
+      <p class="footer__disclaimer"><strong>Disclaimer:</strong> {earningsDisclaimer}</p>
+      <ul role="list" class="footer__legal-links mono">
+        <li><a href="/refund-policy">Refund policy</a></li>
+        <li><a href="/disclaimer">Disclaimers</a></li>
+        <li><a href={legalLinks.terms} target="_blank" rel="noopener">Terms</a></li>
+        <li><a href={legalLinks.privacy} target="_blank" rel="noopener">Privacy</a></li>
+      </ul>
+      <p class="mono footer__copy">© {year} {brand.legalEntity} All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-top: clamp(72px, 9vw, 140px);
+    padding-bottom: 40px;
+    overflow: hidden;
+  }
+  .footer > .wrap {
+    container-type: inline-size;
+  }
+  .footer__mark {
+    /* "Grow Your Wealth" measures ~7.1× its font size: fill the column exactly. */
+    font-size: 13.1cqi;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    margin-bottom: clamp(48px, 6vw, 96px);
+    margin-left: -0.04em;
+  }
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 40px;
+    padding-bottom: 56px;
+  }
+  .footer__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 34ch;
+    color: var(--muted);
+  }
+  .footer__badge {
+    width: 72px;
+    height: 72px;
+    background: var(--paper);
+    border-radius: 50%;
+    padding: 4px;
+  }
+  .footer__h {
+    color: var(--muted);
+    margin-bottom: 18px;
+    font-size: 0.74rem;
+  }
+  .footer ul {
+    display: grid;
+    gap: 10px;
+  }
+  .footer a {
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 480ms var(--ease-out);
+  }
+  .footer a:hover,
+  .footer a:focus-visible {
+    background-size: 100% 1px;
+  }
+  .footer__addr {
+    font-style: normal;
+    display: grid;
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+  .footer__legal {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px 48px;
+    padding-top: 32px;
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+  .footer__disclaimer {
+    max-width: 78ch;
+  }
+  .footer__legal-links {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    align-content: start;
+  }
+  .footer__copy {
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 900px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer__intro {
+      grid-column: 1 / -1;
+    }
+    .footer__legal {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

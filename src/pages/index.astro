@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Audience from '../components/Audience.astro';
+import Bottleneck from '../components/Bottleneck.astro';
+import Method from '../components/Method.astro';
+import Video from '../components/Video.astro';
+import Founder from '../components/Founder.astro';
+import Proof from '../components/Proof.astro';
+import Tickets from '../components/Tickets.astro';
+import Faq from '../components/Faq.astro';
+import Waitlist from '../components/Waitlist.astro';
+import MobileCta from '../components/MobileCta.astro';
+import { faqs } from '../config/faq';
+import { brand, event, isSelling } from '../config/site';
+
+const schema: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+
+if (isSelling && event.nextDate) {
+  schema.push({
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: brand.name,
+    description: brand.description,
+    startDate: `${event.nextDate}T11:00:00-05:00`,
+    endDate: `${event.nextDate}T18:00:00-05:00`,
+    eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: { '@type': 'VirtualLocation', url: brand.siteUrl },
+    organizer: { '@type': 'Organization', name: 'Noelle Randall Inc.', url: brand.siteUrl },
+    performer: { '@type': 'Person', name: 'Noelle Randall' },
+    offers: { '@type': 'Offer', url: event.checkoutUrl, availability: 'https://schema.org/InStock' },
+  });
+}
+---
+
+<Base path="/" schema={schema}>
+  <Hero />
+  <Audience />
+  <Bottleneck />
+  <Method />
+  <Video />
+  <Founder />
+  <Proof />
+  <Tickets />
+  <Faq />
+  <Waitlist />
+  <MobileCta />
+</Base>

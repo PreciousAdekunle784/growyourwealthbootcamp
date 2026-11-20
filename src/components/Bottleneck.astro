@@ -1,0 +1,110 @@
+---
+import { fundingRoutes } from '../config/site';
+import Folio from './Folio.astro';
+---
+
+<section class="section bottleneck on-ink" id="why" aria-labelledby="why-title">
+  <div class="wrap">
+    <Folio num="02" label="The real obstacle" />
+
+    <h2 id="why-title" class="display bottleneck__title" data-lines>
+      <span class="line" style="--i:0"><span>You already know real estate</span></span>
+      <span class="line" style="--i:1"><span>builds wealth. The hard part</span></span>
+      <span class="line" style="--i:2"><span>is <em>paying for it.</em></span></span>
+    </h2>
+
+    <div class="bottleneck__grid">
+      <div class="prose bottleneck__prose" data-reveal>
+        <p>
+          Savings run out fast, and your personal credit can only carry so much. That’s where most plans to invest stall,
+          not for lack of ambition.
+        </p>
+        <p>
+          The bootcamp’s answer is a second engine: a properly set-up business with credit in its own name, and the
+          funding that credit can help you go after.
+        </p>
+      </div>
+
+      <div class="routes">
+        <p class="mono routes__head" data-reveal>Funding routes covered on the day</p>
+        <ol role="list" class="routes__list">
+          {
+            fundingRoutes.map((r, i) => (
+              <li class="routes__item" data-reveal style={`--i:${i}`}>
+                <span class="mono routes__num">R.{String(i + 1).padStart(2, '0')}</span>
+                <span class="routes__name display">{r}</span>
+              </li>
+            ))
+          }
+          <li class="routes__item routes__item--more" data-reveal style={`--i:${fundingRoutes.length}`}>
+            <span class="mono routes__num">R.{String(fundingRoutes.length + 1).padStart(2, '0')}</span>
+            <span class="routes__name display"><em>and more</em></span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bottleneck__title {
+    margin-top: clamp(40px, 5vw, 72px);
+    font-size: var(--step-4);
+    text-wrap: balance;
+  }
+  .bottleneck__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 6vw, 120px);
+    margin-top: clamp(56px, 7vw, 112px);
+    align-items: start;
+  }
+  .bottleneck__prose {
+    color: var(--muted);
+    font-size: var(--step-1);
+    line-height: 1.55;
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+  }
+  .routes__head {
+    color: var(--muted);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--on-ink);
+  }
+  .routes__item {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    align-items: baseline;
+    padding: clamp(14px, 1.6vw, 22px) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .routes__num {
+    color: var(--accent);
+  }
+  .routes__name {
+    font-size: var(--step-3);
+    line-height: 1.05;
+    transition:
+      transform 600ms var(--ease-out),
+      color 400ms ease;
+  }
+  .routes__item:hover .routes__name {
+    transform: translateX(12px);
+    color: var(--accent);
+  }
+  .routes__item--more .routes__name {
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .bottleneck__grid {
+      grid-template-columns: 1fr;
+    }
+    .bottleneck__prose {
+      position: static;
+    }
+    .routes__item {
+      grid-template-columns: 3.5rem 1fr;
+    }
+  }
+</style>

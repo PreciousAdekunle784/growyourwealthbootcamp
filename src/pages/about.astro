@@ -1,0 +1,354 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Folio from '../components/Folio.astro';
+import Arrow from '../components/Arrow.astro';
+import leather from '../assets/img/noelle-leather.jpg';
+import book from '../assets/img/book-grow-your-wealth.jpg';
+import { coaches, founder, primaryCta } from '../config/site';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: founder.name,
+  honorificSuffix: founder.postNominals,
+  jobTitle: 'CEO, Noelle Randall Coaching',
+  url: 'https://noellerandall.com/about/',
+  alumniOf: founder.education.map((e) => ({ '@type': 'CollegeOrUniversity', name: e.school })),
+};
+---
+
+<Base
+  title="About Noelle Randall"
+  description="Noelle Randall, MPS, MBA: entrepreneur of 20+ years, full-time real estate investor, CEO of Noelle Randall Coaching and the teacher behind the Grow Your Wealth Bootcamp."
+  path="/about"
+  headerOnInk
+  schema={[personSchema]}
+>
+  <section class="ahero on-ink" aria-labelledby="about-title">
+    <div class="wrap ahero__grid">
+      <div class="ahero__copy">
+        <p class="mono ahero__kicker" data-reveal>About your teacher</p>
+        <h1 id="about-title" class="display ahero__name" data-lines>
+          <span class="line" style="--i:0"><span>Noelle</span></span>
+          <span class="line" style="--i:1"><span><em>Randall</em></span></span>
+        </h1>
+        <p class="mono ahero__post" data-reveal style="--i:2">{founder.postNominals}</p>
+        <ul role="list" class="ahero__roles" data-reveal style="--i:3">
+          {founder.roles.map((r) => <li>{r}</li>)}
+        </ul>
+      </div>
+      <figure class="ahero__figure">
+        <div class="ahero__frame" data-mask style="--d:200ms">
+          <Image
+            src={leather}
+            alt="Noelle Randall in a black leather jacket, smiling"
+            widths={[480, 720, 960, 1280]}
+            sizes="(max-width: 900px) 100vw, 50vw"
+            loading="eager"
+            fetchpriority="high"
+            class="ahero__img"
+          />
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="short-title">
+    <div class="wrap about__grid">
+      <div>
+        <Folio num="01" label="The short version" />
+      </div>
+      <div class="about__main">
+        <h2 id="short-title" class="display about__lead" data-reveal>
+          “Noelle Randall is all about growth.” An entrepreneur for more than 20 years, a full-time real estate investor,
+          and a teacher to people ready to <em>change their financial position.</em>
+        </h2>
+        <div class="prose about__prose" data-reveal>
+          <p>
+            As CEO of Noelle Randall Coaching, Noelle provides real estate training, workshops and events that teach people
+            how to start from scratch and build a real estate investing business. The Grow Your Wealth Bootcamp is the
+            one-day version of that teaching, focused on three things: the business, the credit and the capital.
+          </p>
+          <p>
+            She’s also the founder and president of FDR Horizon Enterprises, a private real estate equity firm and brand
+            manager that owns a diverse portfolio of real estate, and the Executive Director of the Marley Simms
+            Foundation, a public non-profit dedicated to children’s literacy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about__band surface-2" aria-labelledby="work-title">
+    <div class="wrap about__grid">
+      <div>
+        <Folio num="02" label="The work" />
+        <h2 id="work-title" class="display h3 about__h" data-reveal>Businesses she has built and leads.</h2>
+      </div>
+      <ol role="list" class="ledger">
+        {
+          founder.ventures.map((v, i) => (
+            <li class="ledger__row" data-reveal style={`--i:${i}`}>
+              <span class="ledger__name display">{v.name}</span>
+              <span class="ledger__role mono">{v.role}</span>
+              <span class="ledger__note">{v.note}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="edu-title">
+    <div class="wrap about__grid">
+      <div>
+        <Folio num="03" label="The education" />
+        <h2 id="edu-title" class="display h3 about__h" data-reveal>A perpetual student.</h2>
+      </div>
+      <ol role="list" class="ledger">
+        {
+          founder.education.map((e, i) => (
+            <li class="ledger__row ledger__row--edu" data-reveal style={`--i:${i}`}>
+              <span class="ledger__name display">{e.degree}</span>
+              <span class="ledger__note">{e.school}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section about__band surface-2" aria-labelledby="books-title">
+    <div class="wrap about__grid">
+      <div>
+        <Folio num="04" label="The books" />
+        <h2 id="books-title" class="display h3 about__h" data-reveal>Written down, for anyone starting out.</h2>
+      </div>
+      <div class="books">
+        <figure class="books__cover" data-reveal>
+          <Image
+            src={book}
+            alt="Cover of Grow Your Wealth: Go from Zero to Rich Investing in Real Estate by Noelle Randall, MPS, MBA"
+            width={280}
+            densities={[1, 2]}
+          />
+        </figure>
+        <div>
+          <ol role="list" class="ledger">
+            {
+              founder.books.map((b, i) => (
+                <li class="ledger__row ledger__row--book" data-reveal style={`--i:${i}`}>
+                  <span class="mono ledger__role">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="ledger__name display">{b}</span>
+                </li>
+              ))
+            }
+          </ol>
+          <a class="link-arrow books__link" href="https://noellerandall.com/product-category/books-media-products/" target="_blank" rel="noopener">
+            Find the books in Noelle’s store <Arrow dir="up-right" /><span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    coaches.length > 0 && (
+      <section class="section" aria-labelledby="coaches-title">
+        <div class="wrap about__grid">
+          <div>
+            <Folio num="05" label="The coaches" />
+            <h2 id="coaches-title" class="display h3 about__h">The Master Coaches.</h2>
+          </div>
+          <ol role="list" class="ledger">
+            {coaches.map((c) => (
+              <li class="ledger__row ledger__row--edu">
+                <span class="ledger__name display">{c.name}</span>
+                <span class="ledger__note">{c.role}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section about__reason on-ink" aria-labelledby="reason-title">
+    <div class="wrap">
+      <p class="mono about__reason-label" data-reveal>The reason</p>
+      <h2 id="reason-title" class="display about__reason-text" data-reveal>
+        Noelle is the proud mother of <em>seven children,</em> whom she credits as her inspiration for every endeavor.
+      </h2>
+      <div class="about__cta" data-reveal>
+        <a class="btn btn--accent" href={primaryCta.href}>
+          {primaryCta.label}
+          <Arrow />
+        </a>
+        <a class="link-arrow" href="/#method">See the bootcamp method <Arrow /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ahero {
+    padding-top: calc(var(--header-h) + clamp(32px, 5vw, 72px));
+    overflow: hidden;
+  }
+  .ahero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 80px);
+    align-items: end;
+  }
+  .ahero__copy {
+    padding-bottom: clamp(40px, 6vw, 96px);
+    container-type: inline-size;
+  }
+  .ahero__kicker {
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .ahero__name {
+    font-size: min(26cqi, 11rem);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+  }
+  .ahero__post {
+    margin-top: 28px;
+    color: var(--accent);
+  }
+  .ahero__roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin-top: 24px;
+    font-size: var(--step-1);
+    color: var(--muted);
+  }
+  .ahero__roles li {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .ahero__roles li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+  }
+  .ahero__frame {
+    aspect-ratio: 4 / 4.4;
+    overflow: hidden;
+  }
+  .ahero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 40% 30%;
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: clamp(32px, 6vw, 120px);
+    align-items: start;
+  }
+  .about__h {
+    margin-top: 32px;
+    max-width: 14ch;
+  }
+  .about__lead {
+    font-size: var(--step-3);
+    line-height: 1.1;
+    font-weight: 400;
+  }
+  .about__prose {
+    margin-top: 40px;
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .ledger {
+    border-top: 1px solid var(--line-strong);
+  }
+  .ledger__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) 10rem minmax(0, 1fr);
+    gap: 8px 24px;
+    align-items: baseline;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .ledger__row--edu {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+  .ledger__row--book {
+    grid-template-columns: 3rem 1fr;
+  }
+  .ledger__name {
+    font-size: var(--step-2);
+    line-height: 1.15;
+  }
+  .ledger__role {
+    color: var(--accent);
+  }
+  .ledger__note {
+    color: var(--muted);
+  }
+
+  .books {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: start;
+  }
+  .books__cover img {
+    width: 100%;
+    box-shadow: 0 24px 48px -24px rgba(12, 22, 51, 0.45);
+  }
+  .books__link {
+    margin-top: 28px;
+  }
+
+  .about__reason-label {
+    color: var(--muted);
+  }
+  .about__reason-text {
+    margin-top: 32px;
+    font-size: var(--step-4);
+    max-width: 20ch;
+    font-weight: 400;
+  }
+  .about__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 32px;
+    align-items: center;
+    margin-top: 48px;
+  }
+
+  @media (max-width: 900px) {
+    .ahero__grid,
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+    .ahero__copy {
+      padding-bottom: 0;
+    }
+    .ahero__figure {
+      margin-inline: calc(var(--gutter) * -1);
+    }
+    .ledger__row {
+      grid-template-columns: 1fr;
+    }
+    .books {
+      grid-template-columns: 1fr;
+    }
+    .books__cover {
+      max-width: 200px;
+    }
+  }
+</style>

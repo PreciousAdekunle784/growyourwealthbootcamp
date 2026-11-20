@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { contact, legalLinks } from '../config/site';
+---
+
+<Base title="Refund policy" description="Refund and cancellation policy for Grow Your Wealth Bootcamp event tickets." path="/refund-policy">
+  <PageIntro label="Refunds & cancellations" title="Refund <em>policy.</em>" lede="The short version: event tickets are non-refundable, and ticket holders get replay access instead." />
+
+  <div class="wrap legal">
+    <aside class="legal__meta" aria-label="Policy details">
+      <span>Applies to: event tickets</span>
+      <span>Last updated: November 22, 2023</span>
+      <span>Issued by: Noelle Randall Inc.</span>
+    </aside>
+
+    <article class="legal__body">
+      <h2>Refunds &amp; cancellations</h2>
+      <p>
+        By continuing with your purchase and entering your credit card information, or otherwise enrolling,
+        electronically, verbally, or otherwise, in acquiring event tickets, you (“Client”) are agreeing to the following
+        refund policy.
+      </p>
+      <p>
+        We do not offer refunds on event tickets. All agreements for event tickets are NOT subject to cancellation or
+        refund but may be eligible for store credit or transfer to a future event. We do not accept any verbal
+        modifications of these Agreements and the “no refund and no cancellation” policy stated in the Agreements is
+        strictly adhered to. This policy is reiterated in the Terms &amp; Conditions that you are required to agree to by
+        clicking the checkbox during the checkout process in order to complete your transaction.
+      </p>
+      <p>
+        Be sure to return to this Policy periodically to review the most current version of the Policy. We reserve the
+        right at any time, at our sole discretion, to change or otherwise modify this Policy without prior notice;
+        however, the date of any effective changes shall be reflected on this page and upon request we will provide you
+        with information regarding any changes made.
+      </p>
+
+      <h2>If you can’t attend</h2>
+      <p>
+        Ticket holders are given access to the replay after the event (three weeks after the most recent edition), so
+        missing the live day doesn’t mean missing the content.
+      </p>
+
+      <h2>Questions</h2>
+      <p>
+        Contact the support team at <a href={`mailto:${contact.email}`}>{contact.email}</a> or
+        <a href={contact.phoneHref}>{contact.phoneDisplay}</a>. The full
+        <a href={legalLinks.terms} target="_blank" rel="noopener">Terms &amp; Conditions</a> of Noelle Randall Inc. also
+        apply.
+      </p>
+    </article>
+  </div>
+</Base>

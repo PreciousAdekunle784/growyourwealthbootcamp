@@ -1,0 +1,260 @@
+---
+import { method, primaryCta } from '../config/site';
+import Folio from './Folio.astro';
+import Arrow from './Arrow.astro';
+
+const layers = [...method].reverse();
+---
+
+<section class="section method" id="method" aria-labelledby="method-title" data-method data-active="0">
+  <div class="wrap">
+    <Folio num="03" label="The method" />
+    <div class="method__intro">
+      <h2 id="method-title" class="display h2" data-lines>
+        <span class="line" style="--i:0"><span>Three moves,</span></span>
+        <span class="line" style="--i:1"><span>in the right <em>order.</em></span></span>
+      </h2>
+      <p class="lede" data-reveal style="--i:2">
+        Most people try to start at the top, with the property. The bootcamp works from the ground up, one layer on the
+        last.
+      </p>
+    </div>
+
+    <div class="method__grid">
+      <div class="method__visual" aria-hidden="true">
+        <div class="mstack">
+          <svg class="mstack__house" viewBox="0 0 240 150" fill="none">
+            <path d="M20 148V70L120 6l100 64v78" stroke="currentColor" stroke-width="1.5" pathLength="1" />
+            <path d="M96 148v-48h48v48" stroke="currentColor" stroke-width="1.5" pathLength="1" />
+          </svg>
+          {
+            layers.map((l) => {
+              const n = method.findIndex((m) => m.key === l.key) + 1;
+              return (
+                <div class={`mstack__layer mstack__layer--${l.key}`} data-n={n}>
+                  <span class="mstack__num">{String(n).padStart(2, '0')}</span>
+                  <span class="mstack__label">{l.label}</span>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+
+      <ol class="steps" role="list">
+        {
+          method.map((m, i) => (
+            <li class="step" data-step={i + 1}>
+              <p class="step__num display">{String(i + 1).padStart(2, '0')}</p>
+              <div>
+                <p class="mono step__label">{m.label}</p>
+                <h3 class="step__title display">{m.title}</h3>
+                <p class="step__body">{m.body}</p>
+              </div>
+            </li>
+          ))
+        }
+        <li class="step step--then" data-step={method.length + 1}>
+          <p class="step__num display"><em>→</em></p>
+          <div>
+            <p class="mono step__label">Then</p>
+            <h3 class="step__title display">Fund deals, acquire properties, and <em>scale your portfolio.</em></h3>
+            <p class="step__body">
+              That’s the point of the order. With the structure, the credit and the capital in place, the property is the
+              next move rather than the first hurdle.
+            </p>
+            <a class="btn btn--accent step__cta" href={primaryCta.href}>
+              {primaryCta.label}
+              <Arrow />
+            </a>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .method__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 96px);
+    margin-top: clamp(40px, 5vw, 72px);
+    align-items: end;
+  }
+  .method__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 6vw, 120px);
+    margin-top: clamp(56px, 7vw, 112px);
+  }
+
+  .method__visual {
+    position: sticky;
+    top: calc(var(--header-h) + 40px);
+    align-self: start;
+    height: min(70vh, 620px);
+    display: flex;
+    align-items: flex-end;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px),
+      var(--paper-2);
+    padding: 32px;
+  }
+  .mstack {
+    width: 100%;
+    display: grid;
+  }
+  .mstack__house {
+    width: 62%;
+    margin: 0 auto -1px;
+    color: var(--ink);
+  }
+  .mstack__house path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .mstack__layer {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: clamp(14px, 2vw, 24px) clamp(16px, 2vw, 28px);
+    color: var(--paper);
+    border-top: 1px solid rgba(244, 239, 230, 0.18);
+  }
+  .mstack__layer--capital {
+    background: var(--accent);
+    color: #fff;
+    margin-inline: 12%;
+  }
+  .mstack__layer--credit {
+    background: var(--blue);
+    margin-inline: 6%;
+  }
+  .mstack__layer--structure {
+    background: var(--ink);
+  }
+  .mstack__num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    line-height: 1;
+  }
+  .mstack__label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Build-on-scroll: layers settle in as their step reaches the middle of the screen. */
+  :global(html.motion) .mstack__layer {
+    opacity: 0;
+    transform: translateY(-48px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 900ms var(--ease-out);
+  }
+  :global(html.motion) .mstack__house path {
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1600ms var(--ease-in-out);
+  }
+  :global(html.motion) [data-active='1'] .mstack__layer[data-n='1'],
+  :global(html.motion) [data-active='2'] .mstack__layer:is([data-n='1'], [data-n='2']),
+  :global(html.motion) :is([data-active='3'], [data-active='4']) .mstack__layer {
+    opacity: 1;
+    transform: none;
+  }
+  :global(html.motion) [data-active='4'] .mstack__house path {
+    stroke-dashoffset: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: clamp(4rem, 8vw, 7.5rem) 1fr;
+    gap: 16px;
+    padding: clamp(40px, 6vw, 88px) 0;
+    border-top: 1px solid var(--line-strong);
+    min-height: 52vh;
+  }
+  .step__num {
+    font-size: var(--step-4);
+    line-height: 0.9;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--line-strong);
+    transition: color 600ms ease;
+  }
+  .step.is-current .step__num {
+    color: var(--accent);
+  }
+  .step__label {
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .step__title {
+    font-size: var(--step-3);
+    line-height: 1.05;
+    max-width: 16ch;
+  }
+  .step__body {
+    margin-top: 20px;
+    color: var(--muted);
+    max-width: 44ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+  .step__cta {
+    margin-top: 36px;
+  }
+  .step--then {
+    min-height: auto;
+  }
+
+  @media (max-width: 900px) {
+    .method__intro,
+    .method__grid {
+      grid-template-columns: 1fr;
+    }
+    .method__visual {
+      position: relative;
+      top: 0;
+      height: auto;
+      padding: 24px 20px 0;
+    }
+    :global(html.motion) .mstack__layer {
+      opacity: 1;
+      transform: none;
+    }
+    :global(html.motion) .mstack__house path {
+      stroke-dashoffset: 0;
+    }
+    .step {
+      min-height: 0;
+    }
+  }
+</style>
+
+<script>
+  const section = document.querySelector<HTMLElement>('[data-method]');
+  if (section) {
+    const steps = Array.from(section.querySelectorAll<HTMLElement>('[data-step]'));
+    const motion = document.documentElement.classList.contains('motion');
+    if (!motion) {
+      section.dataset.active = String(steps.length);
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            const n = Number((e.target as HTMLElement).dataset.step);
+            section.dataset.active = String(n);
+            steps.forEach((s) => s.classList.toggle('is-current', Number(s.dataset.step) === n));
+          }
+        },
+        { rootMargin: '-45% 0px -45% 0px' },
+      );
+      steps.forEach((s) => io.observe(s));
+    }
+  }
+</script>

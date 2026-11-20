@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Arrow from '../components/Arrow.astro';
+import { contact } from '../config/site';
+
+const channels = [
+  { k: 'Email', v: contact.email, href: `mailto:${contact.email}`, note: 'Best for order, access and replay questions.' },
+  { k: 'Phone', v: contact.phoneDisplay, href: contact.phoneHref, note: 'Toll-free, US.' },
+];
+---
+
+<Base title="Support" description="Contact the Grow Your Wealth Bootcamp support team by email, phone or mail." path="/support">
+  <PageIntro
+    label="Support"
+    title="Real people, <em>ready to help.</em>"
+    lede="Questions about tickets, access, replays or VIP? Noelle’s team of coaches and specialists handles them."
+  />
+
+  <section class="wrap support" aria-label="Contact options">
+    <ul role="list" class="support__list">
+      {
+        channels.map((c, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <p class="mono support__k">{c.k}</p>
+            <a class="display support__v" href={c.href}>{c.v}</a>
+            <p class="support__note">{c.note}</p>
+          </li>
+        ))
+      }
+      <li data-reveal style="--i:2">
+        <p class="mono support__k">Mail</p>
+        <address class="display support__v support__addr">
+          {contact.mail.map((l) => <span>{l}</span>)}
+        </address>
+        <p class="support__note">{'Noelle Randall Inc.'}</p>
+      </li>
+    </ul>
+
+    <div class="support__more" data-reveal>
+      <p>Many answers are already in the bootcamp FAQ.</p>
+      <a class="link-arrow" href="/#questions">Read the questions <Arrow /></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .support {
+    padding-bottom: var(--section);
+  }
+  .support__list {
+    border-top: 1px solid var(--line-strong);
+  }
+  .support__list li {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr) minmax(0, 18rem);
+    gap: 8px 32px;
+    align-items: baseline;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .support__k {
+    color: var(--accent);
+  }
+  .support__v {
+    font-size: var(--step-3);
+    line-height: 1.1;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  a.support__v:hover {
+    font-style: italic;
+  }
+  .support__addr {
+    font-style: normal;
+    display: grid;
+  }
+  .support__note {
+    color: var(--muted);
+  }
+  .support__more {
+    margin-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    align-items: center;
+  }
+  @media (max-width: 800px) {
+    .support__list li {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

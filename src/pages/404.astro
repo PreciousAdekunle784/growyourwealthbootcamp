@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Arrow from '../components/Arrow.astro';
+---
+
+<Base title="Page not found" path="/404" noindex>
+  <PageIntro label="Error 404" title="This page isn’t <em>on the ledger.</em>" lede="The link may be from an earlier event. The bootcamp’s current details are on the home page." />
+  <div class="wrap" style="padding-bottom: var(--section); display:flex; gap:20px 32px; flex-wrap:wrap; align-items:center">
+    <a class="btn btn--accent" href="/">Go to the bootcamp <Arrow /></a>
+    <a class="link-arrow" href="/support">Contact support <Arrow /></a>
+  </div>
+</Base>

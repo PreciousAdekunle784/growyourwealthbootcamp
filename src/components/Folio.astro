@@ -1,0 +1,11 @@
+---
+/** Section label in the ledger style: "§ 03 — The method" with a rule that draws. */
+interface Props {
+  num: string;
+  label: string;
+  class?: string;
+}
+const { num, label, class: cls } = Astro.props;
+---
+
+<p class:list={['folio', cls]} data-reveal><span class="folio__num">§ {num}</span>{label}</p>

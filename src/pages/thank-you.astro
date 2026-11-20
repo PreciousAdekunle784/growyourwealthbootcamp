@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Arrow from '../components/Arrow.astro';
+import { contact, socials } from '../config/site';
+---
+
+<Base title="You’re on the list" path="/thank-you" noindex>
+  <PageIntro
+    label="Waitlist confirmed"
+    title="You’re <em>on the list.</em>"
+    lede="You’ll be among the first to know when the next Grow Your Wealth Bootcamp is announced, and when any replay is released."
+  />
+
+  <section class="wrap ty" aria-label="What happens next">
+    <ol role="list" class="ty__steps">
+      <li data-reveal style="--i:0">
+        <span class="mono ty__n">01</span>
+        <p>
+          Watch your inbox for emails from <strong>{contact.email}</strong>. Add it to your contacts so nothing lands in
+          spam.
+        </p>
+      </li>
+      <li data-reveal style="--i:1">
+        <span class="mono ty__n">02</span>
+        <p>While you wait, read how the day works: structure, credit, then capital.</p>
+      </li>
+      <li data-reveal style="--i:2">
+        <span class="mono ty__n">03</span>
+        <p>
+          Follow Noelle for her latest videos:
+          {
+            socials.map((s, i) => (
+              <>
+                <a href={s.href} target="_blank" rel="noopener">
+                  {s.label}
+                </a>
+                {i < socials.length - 1 ? ', ' : '.'}
+              </>
+            ))
+          }
+        </p>
+      </li>
+    </ol>
+    <div class="ty__actions" data-reveal>
+      <a class="btn" href="/#method">See the method <Arrow /></a>
+      <a class="link-arrow" href="/about">About Noelle <Arrow /></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ty {
+    padding-bottom: var(--section);
+  }
+  .ty__steps {
+    border-top: 1px solid var(--line-strong);
+    max-width: 860px;
+  }
+  .ty__steps li {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--step-1);
+  }
+  .ty__n {
+    color: var(--accent);
+    padding-top: 6px;
+  }
+  .ty__actions {
+    margin-top: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 32px;
+    align-items: center;
+  }
+</style>

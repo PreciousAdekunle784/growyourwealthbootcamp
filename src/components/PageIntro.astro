@@ -1,0 +1,31 @@
+---
+/** Top of a text page: ledger label, large title, optional lede. */
+interface Props {
+  label: string;
+  title: string;
+  lede?: string;
+}
+const { label, title, lede } = Astro.props;
+---
+
+<header class="pintro wrap">
+  <p class="folio" data-reveal><span class="folio__num">§</span>{label}</p>
+  <h1 class="display pintro__title" data-reveal style="--i:1" set:html={title} />
+  {lede && <p class="lede pintro__lede" data-reveal style="--i:2">{lede}</p>}
+</header>
+
+<style>
+  .pintro {
+    padding-top: calc(var(--header-h) + clamp(40px, 7vw, 112px));
+    padding-bottom: clamp(40px, 5vw, 72px);
+  }
+  .pintro__title {
+    margin-top: clamp(32px, 4vw, 56px);
+    font-size: var(--step-5);
+    max-width: 14ch;
+  }
+  .pintro__lede {
+    margin-top: 28px;
+    max-width: 52ch;
+  }
+</style>

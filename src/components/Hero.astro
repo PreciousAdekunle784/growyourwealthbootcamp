@@ -1,0 +1,280 @@
+---
+import { Image } from 'astro:assets';
+import cutout from '../assets/img/noelle-cutout.png';
+import { event, formatDate, isSelling, method, primaryCta } from '../config/site';
+import Arrow from './Arrow.astro';
+
+const ledger = [
+  { k: 'Format', v: 'Virtual, join from anywhere' },
+  { k: 'Length', v: `One day, ${event.hours}` },
+  { k: 'Taught by', v: 'Noelle Randall & Master Coaches' },
+  {
+    k: isSelling ? 'Date' : 'Next date',
+    v: isSelling ? formatDate(event.nextDate) : 'To be announced',
+    accent: true,
+  },
+];
+
+// Stack is drawn top-down: Capital sits on Credit sits on Structure.
+const layers = [...method].reverse();
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__grid wrap">
+    <div class="hero__copy">
+      <p class="hero__kicker mono" data-reveal style="--i:0">
+        The Grow Your Wealth Bootcamp <span aria-hidden="true">—</span> one day, with Noelle Randall
+      </p>
+
+      <h1 id="hero-title" class="display hero__title" data-lines>
+        <span class="line" style="--i:0"><span>Build the credit.</span></span>
+        <span class="line" style="--i:1"><span>Unlock the capital.</span></span>
+        <span class="line" style="--i:2"><span>Buy the <em>property.</em></span></span>
+      </h1>
+
+      <p class="hero__lede" data-reveal style="--i:4">
+        One focused day with real estate investor Noelle Randall and her coaching team on the order that matters: set your
+        business up the right way, build business credit, then secure the funding to grow.
+      </p>
+
+      <div class="hero__actions" data-reveal style="--i:5">
+        <a class="btn btn--accent" href={primaryCta.href} {...primaryCta.external ? { rel: 'noopener' } : {}}>
+          {primaryCta.label}
+          <Arrow />
+        </a>
+        <a class="link-arrow" href="#method">How the day works <Arrow dir="down" /></a>
+      </div>
+      {
+        !isSelling && (
+          <p class="hero__note" data-reveal style="--i:6">
+            The last edition ran on {formatDate(event.lastEdition.date)}. The waitlist hears about the next date first.
+          </p>
+        )
+      }
+    </div>
+
+    <div class="hero__art" aria-hidden="true">
+      <div class="hero__paper"></div>
+      <div class="hero__figure" data-mask style="--d:300ms">
+        <Image
+          src={cutout}
+          alt=""
+          widths={[360, 540, 720]}
+          sizes="(max-width: 900px) 62vw, 30vw"
+          loading="eager"
+          fetchpriority="high"
+          class="hero__cutout"
+        />
+      </div>
+      <ol class="stack" role="list">
+        {
+          layers.map((l, i) => (
+            <li class={`stack__layer stack__layer--${l.key}`} data-reveal style={`--i:${i + 2}`}>
+              <span class="stack__num">{String(method.length - i).padStart(2, '0')}</span>
+              <span class="stack__label">{l.label}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+
+  <dl class="hero__ledger wrap" aria-label="Bootcamp at a glance">
+    {
+      ledger.map((row, i) => (
+        <div class="hero__ledger-row" data-reveal style={`--i:${i + 6}`}>
+          <dt class="mono">{row.k}</dt>
+          <dd class:list={{ accent: row.accent }}>{row.v}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: calc(var(--header-h) + clamp(24px, 4vw, 56px));
+  }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 64px);
+    align-items: end;
+  }
+  .hero__copy {
+    padding-bottom: clamp(32px, 5vw, 72px);
+    position: relative;
+    z-index: 2;
+    container-type: inline-size;
+  }
+  .hero__kicker {
+    color: var(--muted);
+    margin-bottom: clamp(24px, 3vw, 40px);
+    max-width: 44ch;
+  }
+  .hero__title {
+    /* Widest line measures 7.9× its font size: size to the column so it never clips. */
+    font-size: min(12.3cqi, 7.4rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    text-wrap: initial;
+  }
+  .hero__title .line {
+    white-space: nowrap;
+  }
+  .hero__lede {
+    margin-top: clamp(28px, 3vw, 44px);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    max-width: 40ch;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .hero__actions {
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 32px;
+    align-items: center;
+  }
+  .hero__note {
+    margin-top: 20px;
+    font-size: var(--step--1);
+    color: var(--muted);
+    max-width: 46ch;
+  }
+
+  /* The composition: Noelle standing on the capital stack, on ledger paper. */
+  .hero__art {
+    position: relative;
+    align-self: stretch;
+    min-height: clamp(520px, 64vw, 860px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .hero__paper {
+    position: absolute;
+    inset: 6% 0 0 8%;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px),
+      var(--paper-2);
+    border-left: 1px solid var(--accent);
+  }
+  .hero__figure {
+    position: relative;
+    z-index: 1;
+    width: 72%;
+    margin-inline: auto 6%;
+    margin-bottom: -2px;
+  }
+  .hero__cutout {
+    width: 100%;
+    height: auto;
+    transform-origin: bottom center;
+  }
+  .stack {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    margin-left: 8%;
+  }
+  .stack__layer {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 14px clamp(16px, 2vw, 28px);
+    color: var(--paper);
+    border-top: 1px solid rgba(244, 239, 230, 0.18);
+  }
+  .stack__layer--capital {
+    background: var(--accent);
+    color: #fff;
+    margin-inline: 10% 0;
+  }
+  .stack__layer--credit {
+    background: var(--blue);
+    margin-inline: 5% 0;
+  }
+  .stack__layer--structure {
+    background: var(--ink);
+  }
+  .stack__num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.6rem, 2.4vw, 2.4rem);
+    line-height: 1;
+  }
+  .stack__label {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .hero__ledger {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .hero__ledger-row {
+    padding: 20px 20px 22px 0;
+    border-top: 1px solid var(--line-strong);
+    border-right: 1px solid var(--line);
+  }
+  .hero__ledger-row + .hero__ledger-row {
+    padding-left: 20px;
+  }
+  .hero__ledger-row:last-child {
+    border-right: 0;
+  }
+  .hero__ledger dt {
+    color: var(--muted);
+    font-size: 0.72rem;
+    margin-bottom: 6px;
+  }
+  .hero__ledger dd {
+    font-size: var(--step-0);
+    font-weight: 500;
+  }
+  .hero__ledger dd.accent {
+    color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+    .hero__copy {
+      padding-bottom: 8px;
+    }
+    .hero__art {
+      min-height: 0;
+      margin-inline: calc(var(--gutter) * -1);
+    }
+    .hero__paper {
+      inset: 10% 0 0 0;
+      border-left: 0;
+      border-top: 1px solid var(--accent);
+    }
+    .hero__figure {
+      width: min(68%, 380px);
+      margin-inline: auto;
+    }
+    .stack {
+      margin-left: 0;
+    }
+    .hero__ledger {
+      grid-template-columns: 1fr 1fr;
+    }
+    .hero__ledger-row:nth-child(2) {
+      border-right: 0;
+    }
+    .hero__ledger-row + .hero__ledger-row:nth-child(3) {
+      padding-left: 0;
+    }
+    .hero__ledger-row:nth-child(n + 3) {
+      border-top-color: var(--line);
+    }
+  }
+</style>

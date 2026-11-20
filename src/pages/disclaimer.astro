@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { earningsDisclaimer, legalLinks, partners } from '../config/site';
+---
+
+<Base title="Disclaimers" description="Earnings, testimonial and affiliate disclaimers for the Grow Your Wealth Bootcamp." path="/disclaimer">
+  <PageIntro label="Disclaimers" title="The fine print, <em>in plain words.</em>" />
+
+  <div class="wrap legal">
+    <nav class="legal__meta" aria-label="On this page">
+      <a href="#earnings">Earnings</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#affiliates">Affiliate links</a>
+    </nav>
+
+    <article class="legal__body">
+      <h2 id="earnings">Earnings disclaimer</h2>
+      <p>{earningsDisclaimer}</p>
+      <p>
+        Nothing on this website is financial, legal or tax advice. Funding decisions depend on lenders and programs we
+        don’t control, and eligibility varies by person and business.
+      </p>
+
+      <h2 id="testimonials">Testimonials</h2>
+      <p>
+        Testimonials on this site are from members of Noelle Randall Coaching, shared in their own words. They describe
+        individual experiences, are not typical, and are not a promise that you will get the same or similar results.
+      </p>
+
+      <h2 id="affiliates">Affiliate and partner links</h2>
+      <p>
+        Some partner links on this site are affiliate or referral links. If you sign up or buy through one of them,
+        Noelle Randall Inc. may receive compensation, at no extra cost to you. Current partners include:
+      </p>
+      <ul>
+        {partners.map((p) => <li>{p.name}</li>)}
+      </ul>
+
+      <p class="legal__note">
+        See also the <a href={legalLinks.terms} target="_blank" rel="noopener">Terms &amp; Conditions</a> and
+        <a href={legalLinks.privacy} target="_blank" rel="noopener">Privacy Policy</a> of Noelle Randall Inc., and the
+        <a href="/refund-policy">refund policy</a> for event tickets.
+      </p>
+    </article>
+  </div>
+</Base>

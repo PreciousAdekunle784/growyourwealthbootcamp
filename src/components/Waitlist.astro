@@ -1,0 +1,252 @@
+---
+import { contact, event, formatDate, integrations, isSelling, legalLinks, primaryCta } from '../config/site';
+import Folio from './Folio.astro';
+import Arrow from './Arrow.astro';
+---
+
+<section class="section waitlist on-ink" id="waitlist" aria-labelledby="waitlist-title">
+  <div class="wrap waitlist__grid">
+    <div class="waitlist__copy">
+      <Folio num="09" label={isSelling ? 'Reserve your seat' : 'The waitlist'} />
+      <h2 id="waitlist-title" class="display waitlist__title" data-lines>
+        {
+          isSelling ? (
+            <>
+              <span class="line" style="--i:0"><span>The capital is out there.</span></span>
+              <span class="line" style="--i:1"><span>Learn how to <em>reach it.</em></span></span>
+            </>
+          ) : (
+            <>
+              <span class="line" style="--i:0"><span>Be first in line</span></span>
+              <span class="line" style="--i:1"><span>for the <em>next</em> bootcamp.</span></span>
+            </>
+          )
+        }
+      </h2>
+      <p class="lede" data-reveal style="--i:2">
+        {
+          isSelling
+            ? `${formatDate(event.nextDate)}, ${event.hours}. Seats are reserved at checkout.`
+            : 'Add your name and you’ll hear first when the next date is announced, and when any replay is released.'
+        }
+      </p>
+      {
+        isSelling && (
+          <a class="btn btn--accent waitlist__buy" href={primaryCta.href} rel="noopener" data-reveal style="--i:3">
+            {primaryCta.label}
+            <Arrow />
+          </a>
+        )
+      }
+    </div>
+
+    <form
+      class="form"
+      novalidate
+      data-waitlist-form
+      data-endpoint={integrations.waitlistEndpoint}
+      data-fallback-email={contact.email}
+      aria-describedby="form-status"
+    >
+      <p class="form__title mono">{isSelling ? 'Not ready yet? Get updates' : 'Join the waitlist'}</p>
+
+      <div class="form__row">
+        <div class="field">
+          <label for="wl-first">First name</label>
+          <input id="wl-first" name="first_name" type="text" autocomplete="given-name" required maxlength="60" aria-describedby="wl-first-err" />
+          <p class="field__err" id="wl-first-err" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="wl-last">Last name</label>
+          <input id="wl-last" name="last_name" type="text" autocomplete="family-name" required maxlength="60" aria-describedby="wl-last-err" />
+          <p class="field__err" id="wl-last-err" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="wl-email">Email</label>
+        <input id="wl-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="120" aria-describedby="wl-email-err" />
+        <p class="field__err" id="wl-email-err" aria-live="polite"></p>
+      </div>
+
+      <div class="field">
+        <label for="wl-phone">Mobile phone <span class="field__opt">(for event reminders)</span></label>
+        <input id="wl-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="24" aria-describedby="wl-phone-err" />
+        <p class="field__err" id="wl-phone-err" aria-live="polite"></p>
+      </div>
+
+      <!-- Honeypot: hidden from people, tempting to bots. -->
+      <div class="form__hp" aria-hidden="true">
+        <label for="wl-website">Website</label>
+        <input id="wl-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="field field--check">
+        <input id="wl-consent" name="consent" type="checkbox" required aria-describedby="wl-consent-err" />
+        <label for="wl-consent">
+          I agree to receive emails, calls and texts about Grow Your Wealth Bootcamp events from Noelle Randall Inc., and
+          to the <a href={legalLinks.terms} target="_blank" rel="noopener">terms</a> and
+          <a href={legalLinks.privacy} target="_blank" rel="noopener">privacy policy</a>. Message and data rates may apply.
+          Reply STOP to opt out.
+        </label>
+        <p class="field__err" id="wl-consent-err" aria-live="polite"></p>
+      </div>
+
+      <button class="btn btn--accent form__submit" type="submit" data-submit>
+        <span data-submit-label>Join the waitlist</span>
+        <Arrow />
+      </button>
+      <p class="form__status" id="form-status" role="status" aria-live="polite" data-status></p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .waitlist {
+    padding-block: var(--section);
+  }
+  .waitlist__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(48px, 7vw, 128px);
+    align-items: start;
+  }
+  .waitlist__title {
+    font-size: var(--step-4);
+    margin-top: clamp(40px, 5vw, 72px);
+    text-wrap: initial;
+  }
+  .waitlist__copy .lede {
+    margin-top: 32px;
+  }
+  .waitlist__buy {
+    margin-top: 36px;
+  }
+
+  .form {
+    display: grid;
+    gap: 22px;
+    padding: clamp(24px, 3.4vw, 48px);
+    background: var(--paper);
+    color: var(--ink);
+    --line: rgba(12, 22, 51, 0.16);
+    --muted: #4b516a;
+    --accent: #c8125f;
+  }
+  .form :focus-visible {
+    outline-color: var(--accent);
+  }
+  .form__title {
+    color: var(--muted);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  .field {
+    display: grid;
+    gap: 6px;
+  }
+  .field label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .field__opt {
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--muted);
+  }
+  .field input[type='text'],
+  .field input[type='email'],
+  .field input[type='tel'] {
+    width: 100%;
+    min-height: 52px;
+    padding: 10px 0;
+    border: 0;
+    border-bottom: 1.5px solid rgba(12, 22, 51, 0.45);
+    border-radius: 0;
+    background: transparent;
+    font-size: 1.1rem;
+    transition: border-color 300ms ease;
+  }
+  .field input:focus {
+    outline: none;
+    border-bottom-color: var(--accent);
+  }
+  .field input:focus-visible {
+    outline: none;
+    box-shadow: 0 2px 0 0 var(--accent);
+  }
+  .field input[aria-invalid='true'] {
+    border-bottom-color: var(--accent);
+  }
+  .field__err {
+    min-height: 1.2em;
+    font-size: 0.82rem;
+    color: var(--accent);
+  }
+  .field--check {
+    grid-template-columns: 22px 1fr;
+    column-gap: 12px;
+    align-items: start;
+  }
+  .field--check input {
+    width: 20px;
+    height: 20px;
+    margin: 2px 0 0;
+    accent-color: var(--accent);
+  }
+  .field--check label {
+    font-family: var(--font-text);
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .field--check .field__err {
+    grid-column: 2;
+  }
+  .form__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .form__submit {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .form__status {
+    min-height: 1.4em;
+    font-size: 0.9rem;
+  }
+  .form__status.is-error {
+    color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .waitlist__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .form__row {
+      grid-template-columns: 1fr;
+    }
+    .form {
+      margin-inline: calc(var(--gutter) * -0.5);
+    }
+  }
+</style>
+
+<script>
+  import { initWaitlistForm } from '../scripts/form';
+  document.querySelectorAll<HTMLFormElement>('[data-waitlist-form]').forEach(initWaitlistForm);
+</script>

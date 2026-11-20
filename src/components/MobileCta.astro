@@ -1,0 +1,75 @@
+---
+import { event, formatDate, isSelling, primaryCta } from '../config/site';
+import Arrow from './Arrow.astro';
+const note = isSelling ? formatDate(event.nextDate) : 'Next date: TBA';
+---
+
+<div class="mcta" data-mcta aria-hidden="true">
+  <span class="mono mcta__note">{note}</span>
+  <a class="btn btn--accent mcta__btn" href={primaryCta.href} tabindex="-1">
+    {primaryCta.label}
+    <Arrow />
+  </a>
+</div>
+
+<style>
+  .mcta {
+    display: none;
+  }
+  @media (max-width: 900px) {
+    .mcta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+      background: var(--ink);
+      color: var(--on-ink);
+      transform: translateY(110%);
+      transition: transform 600ms var(--ease-out);
+    }
+    .mcta.is-visible {
+      transform: none;
+    }
+    .mcta__note {
+      font-size: 0.68rem;
+      color: var(--on-ink-muted);
+    }
+    .mcta__btn {
+      min-height: 48px;
+      padding: 0 18px;
+      font-size: 0.74rem;
+    }
+  }
+</style>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-mcta]');
+  const hero = document.querySelector('.hero');
+  const targets = [document.querySelector('#waitlist'), document.querySelector('footer')].filter(Boolean) as Element[];
+  if (bar && hero) {
+    let pastHero = false;
+    const blocked = new Set<Element>();
+    const link = bar.querySelector('a');
+    const sync = () => {
+      const show = pastHero && blocked.size === 0;
+      bar.classList.toggle('is-visible', show);
+      bar.setAttribute('aria-hidden', String(!show));
+      link?.setAttribute('tabindex', show ? '0' : '-1');
+    };
+    new IntersectionObserver(([e]) => {
+      pastHero = !e.isIntersecting;
+      sync();
+    }).observe(hero);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? blocked.add(e.target) : blocked.delete(e.target)));
+      sync();
+    });
+    targets.forEach((t) => io.observe(t));
+  }
+</script>
