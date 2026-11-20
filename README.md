@@ -75,14 +75,18 @@ Optional: `contact.chatWidgetId` in the config for the LeadConnector chat widget
 ## Design system
 
 **Concept — "The Capital Ledger."** The bootcamp's argument is a sequence: structure → credit → capital → property.
-The site is typeset like a private-banking ledger: numbered sections (§), hairline rules, tabular figures, ledger-paper
+The site is typeset like a private-banking ledger: numbered sections (§), hairline rules, ledger-paper
 panels, and a signature "capital stack" that Noelle stands on in the hero and that builds itself in the Method section.
 
 - **Colour:** ink `#0c1633`, ledger paper `#f4efe6`, the brand's own magenta as the single accent (`#c8125f` on
   paper, `#b5104f` on darker paper, `#ff5c9a` on ink), royal blue `#2b47b5` only in the stack. All text pairs pass
   WCAG AA.
-- **Type:** Bodoni Moda (display, italic for emphasis), Schibsted Grotesk (text), IBM Plex Mono (labels, figures).
-  Self-hosted via Fontsource.
+- **Type:** Fraunces (headlines, italic for emphasis; pinned to its display optical size so headlines scale
+  predictably) and Instrument Sans (body, plus small tracked uppercase for labels and buttons). Self-hosted via
+  Fontsource.
+- **Grid:** one 12-column grid (`.cols`) everywhere. Headings and labels sit in columns 1–5 (`.c-l`); all content
+  starts on the same axis at column 7 (`.c-r`). Section headings are sized from the grid width so the longest line
+  always fits.
 - **Motion:** lines rise out of their own baseline, folio rules draw, images unmask upward, the stack layers settle in
   scroll order. Motion only activates when the visitor allows it (`prefers-reduced-motion` gets everything instantly)
   and content is always visible without JavaScript.

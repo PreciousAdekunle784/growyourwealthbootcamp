@@ -5,20 +5,22 @@ import Arrow from './Arrow.astro';
 ---
 
 <section class="section waitlist on-ink" id="waitlist" aria-labelledby="waitlist-title">
-  <div class="wrap waitlist__grid">
-    <div class="waitlist__copy">
+  <div class="wrap cols cols--start">
+    <div class="c-l waitlist__copy">
       <Folio num="09" label={isSelling ? 'Reserve your seat' : 'The waitlist'} />
-      <h2 id="waitlist-title" class="display waitlist__title" data-lines>
+      <h2 id="waitlist-title" class="display h2 waitlist__title" data-lines>
         {
           isSelling ? (
             <>
-              <span class="line" style="--i:0"><span>The capital is out there.</span></span>
-              <span class="line" style="--i:1"><span>Learn how to <em>reach it.</em></span></span>
+              <span class="line" style="--i:0"><span>The capital</span></span>
+              <span class="line" style="--i:1"><span>is out there.</span></span>
+              <span class="line" style="--i:2"><span>Learn to <em>reach it.</em></span></span>
             </>
           ) : (
             <>
               <span class="line" style="--i:0"><span>Be first in line</span></span>
-              <span class="line" style="--i:1"><span>for the <em>next</em> bootcamp.</span></span>
+              <span class="line" style="--i:1"><span>for the <em>next</em></span></span>
+              <span class="line" style="--i:2"><span>bootcamp.</span></span>
             </>
           )
         }
@@ -41,7 +43,7 @@ import Arrow from './Arrow.astro';
     </div>
 
     <form
-      class="form"
+      class="c-r form"
       novalidate
       data-waitlist-form
       data-endpoint={integrations.waitlistEndpoint}
@@ -105,14 +107,7 @@ import Arrow from './Arrow.astro';
   .waitlist {
     padding-block: var(--section);
   }
-  .waitlist__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: clamp(48px, 7vw, 128px);
-    align-items: start;
-  }
   .waitlist__title {
-    font-size: var(--step-4);
     margin-top: clamp(40px, 5vw, 72px);
     text-wrap: initial;
   }
@@ -151,7 +146,8 @@ import Arrow from './Arrow.astro';
     gap: 6px;
   }
   .field label {
-    font-family: var(--font-mono);
+    font-family: var(--font-label);
+    font-weight: 600;
     font-size: 0.72rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -203,6 +199,7 @@ import Arrow from './Arrow.astro';
   }
   .field--check label {
     font-family: var(--font-text);
+    font-weight: 400;
     font-size: 0.82rem;
     letter-spacing: 0;
     text-transform: none;
@@ -231,11 +228,6 @@ import Arrow from './Arrow.astro';
     color: var(--accent);
   }
 
-  @media (max-width: 900px) {
-    .waitlist__grid {
-      grid-template-columns: 1fr;
-    }
-  }
   @media (max-width: 480px) {
     .form__row {
       grid-template-columns: 1fr;

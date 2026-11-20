@@ -10,13 +10,13 @@ const year = new Date().getFullYear();
   <div class="wrap">
     <p class="footer__mark display" aria-hidden="true">Grow Your <em>Wealth</em></p>
 
-    <div class="footer__grid">
-      <div class="footer__intro">
+    <div class="footer__grid cols">
+      <div class="c-l footer__intro">
         <Image src={badge} alt="Noelle Randall Coaching, Winning in Real Estate" width={88} height={88} class="footer__badge" />
         <p>A one-day bootcamp from {brand.parentBrand}: set up the business, build the credit, secure the funding.</p>
       </div>
 
-      <nav aria-label="Bootcamp">
+      <nav class="footer__col footer__col--nav" aria-label="Bootcamp">
         <h2 class="mono footer__h">The bootcamp</h2>
         <ul role="list">
           <li><a href="/#method">The method</a></li>
@@ -28,7 +28,7 @@ const year = new Date().getFullYear();
         </ul>
       </nav>
 
-      <div>
+      <div class="footer__col footer__col--support">
         <h2 class="mono footer__h">Support</h2>
         <ul role="list">
           <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
@@ -40,7 +40,7 @@ const year = new Date().getFullYear();
         </address>
       </div>
 
-      <nav aria-label="Social">
+      <nav class="footer__col footer__col--social" aria-label="Social">
         <h2 class="mono footer__h">Follow</h2>
         <ul role="list">
           {
@@ -59,15 +59,15 @@ const year = new Date().getFullYear();
 
     <hr class="rule" />
 
-    <div class="footer__legal">
-      <p class="footer__disclaimer"><strong>Disclaimer:</strong> {earningsDisclaimer}</p>
-      <ul role="list" class="footer__legal-links mono">
+    <div class="footer__legal cols">
+      <p class="c-l footer__disclaimer"><strong>Disclaimer:</strong> {earningsDisclaimer}</p>
+      <ul role="list" class="c-r footer__legal-links mono">
         <li><a href="/refund-policy">Refund policy</a></li>
         <li><a href="/disclaimer">Disclaimers</a></li>
         <li><a href={legalLinks.terms} target="_blank" rel="noopener">Terms</a></li>
         <li><a href={legalLinks.privacy} target="_blank" rel="noopener">Privacy</a></li>
       </ul>
-      <p class="mono footer__copy">© {year} {brand.legalEntity} All rights reserved.</p>
+      <p class="c-full mono footer__copy">© {year} {brand.legalEntity} All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -82,8 +82,8 @@ const year = new Date().getFullYear();
     container-type: inline-size;
   }
   .footer__mark {
-    /* "Grow Your Wealth" measures ~7.1× its font size: fill the column exactly. */
-    font-size: 13.1cqi;
+    /* "Grow Your Wealth" measures ~6.35× its font size: fill the column exactly. */
+    font-size: 15.2cqi;
     line-height: 0.85;
     letter-spacing: -0.04em;
     white-space: nowrap;
@@ -91,10 +91,17 @@ const year = new Date().getFullYear();
     margin-left: -0.04em;
   }
   .footer__grid {
-    display: grid;
-    grid-template-columns: 1.6fr repeat(3, 1fr);
-    gap: 40px;
     padding-bottom: 56px;
+  }
+  /* Link columns start on the content axis (column 7). */
+  .footer__col--nav {
+    grid-column: 7 / span 2;
+  }
+  .footer__col--support {
+    grid-column: 9 / span 3;
+  }
+  .footer__col--social {
+    grid-column: 12 / span 1;
   }
   .footer__intro {
     display: flex;
@@ -139,9 +146,7 @@ const year = new Date().getFullYear();
     font-size: var(--step--1);
   }
   .footer__legal {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 24px 48px;
+    row-gap: 24px;
     padding-top: 32px;
     color: var(--muted);
     font-size: var(--step--1);
@@ -158,20 +163,30 @@ const year = new Date().getFullYear();
   .footer__copy {
     grid-column: 1 / -1;
   }
-  @media (max-width: 900px) {
-    .footer__grid {
-      grid-template-columns: 1fr 1fr;
-    }
-    .footer__intro {
+  @media (max-width: 1100px) {
+    .footer__grid > .footer__intro {
       grid-column: 1 / -1;
     }
-    .footer__legal {
-      grid-template-columns: 1fr;
+    .footer__col--nav {
+      grid-column: 1 / span 4;
+    }
+    .footer__col--support {
+      grid-column: 5 / span 5;
+    }
+    .footer__col--social {
+      grid-column: 10 / span 3;
     }
   }
-  @media (max-width: 480px) {
-    .footer__grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 560px) {
+    .footer__col--nav {
+      grid-column: 1 / span 6;
+    }
+    .footer__col--social {
+      grid-column: 7 / span 6;
+      grid-row: 2;
+    }
+    .footer__col--support {
+      grid-column: 1 / -1;
     }
   }
 </style>

@@ -26,7 +26,7 @@ const personSchema = {
   schema={[personSchema]}
 >
   <section class="ahero on-ink" aria-labelledby="about-title">
-    <div class="wrap ahero__grid">
+    <div class="wrap cols ahero__grid">
       <div class="ahero__copy">
         <p class="mono ahero__kicker" data-reveal>About your teacher</p>
         <h1 id="about-title" class="display ahero__name" data-lines>
@@ -197,12 +197,11 @@ const personSchema = {
     overflow: hidden;
   }
   .ahero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 80px);
     align-items: end;
+    row-gap: 0;
   }
   .ahero__copy {
+    grid-column: 1 / span 6;
     padding-bottom: clamp(40px, 6vw, 96px);
     container-type: inline-size;
   }
@@ -211,7 +210,7 @@ const personSchema = {
     margin-bottom: 32px;
   }
   .ahero__name {
-    font-size: min(26cqi, 11rem);
+    font-size: min(33cqi, 12rem);
     line-height: 0.88;
     letter-spacing: -0.04em;
   }
@@ -238,6 +237,9 @@ const personSchema = {
     height: 6px;
     background: var(--accent);
   }
+  .ahero__figure {
+    grid-column: 7 / -1;
+  }
   .ahero__frame {
     aspect-ratio: 4 / 4.4;
     overflow: hidden;
@@ -251,9 +253,16 @@ const personSchema = {
 
   .about__grid {
     display: grid;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-    gap: clamp(32px, 6vw, 120px);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    row-gap: 40px;
     align-items: start;
+  }
+  .about__grid > :first-child {
+    grid-column: 1 / span 5;
+  }
+  .about__grid > :last-child {
+    grid-column: 7 / -1;
   }
   .about__h {
     margin-top: 32px;
@@ -331,12 +340,14 @@ const personSchema = {
   }
 
   @media (max-width: 900px) {
-    .ahero__grid,
-    .about__grid {
-      grid-template-columns: 1fr;
+    .ahero__copy,
+    .ahero__figure,
+    .about__grid > :first-child,
+    .about__grid > :last-child {
+      grid-column: 1 / -1;
     }
     .ahero__copy {
-      padding-bottom: 0;
+      padding-bottom: 32px;
     }
     .ahero__figure {
       margin-inline: calc(var(--gutter) * -1);

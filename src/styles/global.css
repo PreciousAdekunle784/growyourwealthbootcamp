@@ -3,10 +3,9 @@
    Ink + ledger paper, one accent (the brand's own magenta), hairline rules.
    ========================================================================= */
 
-@import '@fontsource-variable/bodoni-moda/opsz.css';
-@import '@fontsource-variable/bodoni-moda/opsz-italic.css';
-@import '@fontsource-variable/schibsted-grotesk/wght.css';
-@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource-variable/fraunces/opsz.css';
+@import '@fontsource-variable/fraunces/opsz-italic.css';
+@import '@fontsource-variable/instrument-sans/wght.css';
 
 :root {
   /* Colour — contrast-checked (AA) pairs only */
@@ -27,9 +26,10 @@
   --blue: #2b47b5; /* brand royal blue, used sparingly */
 
   /* Type */
-  --font-display: 'Bodoni Moda Variable', 'Bodoni 72', 'Didot', Georgia, serif;
-  --font-text: 'Schibsted Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-text: 'Instrument Sans Variable', 'Helvetica Neue', Arial, sans-serif;
+  /* Labels, buttons and figures: the text face, set small, uppercase and tracked. */
+  --font-label: 'Instrument Sans Variable', 'Helvetica Neue', Arial, sans-serif;
 
   --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.86rem);
   --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
@@ -41,6 +41,7 @@
 
   /* Space */
   --gutter: clamp(20px, 4.2vw, 64px);
+  --col-gap: clamp(16px, 2.2vw, 32px);
   --section: clamp(88px, 11vw, 176px);
   --max: 1400px;
 
@@ -73,7 +74,7 @@ body {
   font-family: var(--font-text);
   font-size: var(--step-0);
   line-height: 1.6;
-  font-feature-settings: 'ss01', 'kern';
+  font-feature-settings: 'kern';
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
@@ -156,7 +157,7 @@ ol[role='list'] {
   padding: 10px 16px;
   background: var(--ink);
   color: var(--on-ink);
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: var(--step--1);
   transform: translateY(-160%);
   transition: transform 200ms var(--ease-out);
@@ -197,16 +198,17 @@ ol[role='list'] {
 
 .display {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-variation-settings: 'opsz' 96;
-  letter-spacing: -0.02em;
-  line-height: 0.98;
+  font-weight: 460;
+  font-optical-sizing: auto;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
   text-wrap: balance;
 }
 
 .display em {
   font-style: italic;
   font-weight: 400;
+  letter-spacing: -0.015em;
   color: var(--accent);
 }
 
@@ -235,11 +237,12 @@ ol[role='list'] {
 
 .mono,
 .folio {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  letter-spacing: 0.04em;
+  font-family: var(--font-label);
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .folio {
@@ -261,6 +264,69 @@ ol[role='list'] {
 
 .tabular {
   font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ---------- Grid ----------
+   One 12-column grid for every section. Headings and labels sit in columns
+   1–5; all body content starts on the same axis at column 7. */
+
+.cols {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: clamp(32px, 4vw, 56px);
+}
+.cols > .c-l {
+  grid-column: 1 / span 5;
+}
+.cols > .c-r {
+  grid-column: 7 / -1;
+}
+.cols > .c-full {
+  grid-column: 1 / -1;
+}
+.cols--end {
+  align-items: end;
+}
+.cols--start {
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .cols > .c-l,
+  .cols > .c-r {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Headlines use Fraunces' display cut at every size, so width scales linearly
+   with font size and the column-fitting below stays exact. */
+.hero__title,
+.h2,
+.bottleneck__title,
+.footer__mark,
+.ahero__name,
+.pintro__title {
+  font-variation-settings: 'opsz' 144;
+}
+
+/* Section headings share one size, derived from the grid so the longest line
+   (~7.3× the font size) always fits the 5-column heading area. */
+.cols .h2 {
+  font-size: min(var(--step-4), 5.6cqi);
+}
+@media (max-width: 900px) {
+  .cols .h2 {
+    font-size: min(var(--step-4), 13.4cqi);
+  }
+}
+
+/* Section head: heading on the left, lede on the content axis. */
+.section-head {
+  margin-top: clamp(40px, 5vw, 72px);
+}
+.section-body {
+  margin-top: clamp(56px, 7vw, 104px);
 }
 
 /* ---------- Rules ---------- */
@@ -289,9 +355,10 @@ ol[role='list'] {
   border-radius: 0;
   background: var(--btn-bg);
   color: var(--btn-fg);
-  font-family: var(--font-mono);
-  font-size: 0.86rem;
-  letter-spacing: 0.06em;
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
@@ -348,9 +415,10 @@ ol[role='list'] {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 0.86rem;
-  letter-spacing: 0.06em;
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
   background-image: linear-gradient(currentColor, currentColor);
@@ -442,12 +510,19 @@ html.motion [data-mask].is-in img {
 
 .legal {
   display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-  gap: clamp(32px, 6vw, 120px);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 32px;
   padding-bottom: var(--section);
 }
+.legal > .legal__meta {
+  grid-column: 1 / span 5;
+}
+.legal > .legal__body {
+  grid-column: 7 / -1;
+}
 .legal__meta {
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: var(--step--1);
   color: var(--muted);
   display: grid;
@@ -493,8 +568,9 @@ main:focus {
   outline: none;
 }
 @media (max-width: 900px) {
-  .legal {
-    grid-template-columns: 1fr;
+  .legal > .legal__meta,
+  .legal > .legal__body {
+    grid-column: 1 / -1;
   }
   .legal__meta {
     position: static;

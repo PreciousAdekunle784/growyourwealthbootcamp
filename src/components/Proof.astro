@@ -14,19 +14,19 @@ const [lead, ...rest] = testimonials;
   <div class="wrap">
     <Folio num="06" label="In their words" />
 
-    <div class="proof__head">
-      <h2 id="proof-title" class="display h2" data-lines>
+    <div class="cols cols--end section-head">
+      <h2 id="proof-title" class="c-l display h2" data-lines>
         <span class="line" style="--i:0"><span>The people who</span></span>
         <span class="line" style="--i:1"><span>went <em>first.</em></span></span>
       </h2>
-      <p class="proof__context" data-reveal style="--i:2">
+      <p class="c-r proof__context" data-reveal style="--i:2">
         Members of Noelle Randall Coaching, in their own words. Individual experiences; results are not typical and are
         not guaranteed. <a href="/disclaimer">Read the disclaimer</a>.
       </p>
     </div>
 
-    <div class="proof__grid">
-      <figure class="quote quote--lead" data-reveal>
+    <div class="cols cols--start section-body">
+      <figure class="c-l quote quote--lead" data-reveal>
         <p class="quote__pull mono">{lead.pull}</p>
         <blockquote class="display quote__text">“{lead.quote}”</blockquote>
         <figcaption class="quote__who">
@@ -38,7 +38,7 @@ const [lead, ...rest] = testimonials;
         </figcaption>
       </figure>
 
-      <div class="proof__rest">
+      <div class="c-r proof__rest">
         {
           rest.map((t, i) => (
             <figure class="quote" data-reveal style={`--i:${i + 1}`}>
@@ -60,23 +60,10 @@ const [lead, ...rest] = testimonials;
 </section>
 
 <style>
-  .proof__head {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 96px);
-    align-items: end;
-    margin-top: clamp(40px, 5vw, 72px);
-  }
   .proof__context {
     color: var(--muted);
     font-size: var(--step--1);
     max-width: 44ch;
-  }
-  .proof__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: clamp(40px, 6vw, 112px);
-    margin-top: clamp(56px, 7vw, 104px);
   }
   .quote {
     margin: 0;
@@ -95,8 +82,8 @@ const [lead, ...rest] = testimonials;
     text-wrap: pretty;
   }
   .quote--lead .quote__text {
-    font-size: var(--step-3);
-    line-height: 1.12;
+    font-size: var(--step-2);
+    line-height: 1.2;
   }
   .quote__text--sm {
     font-family: var(--font-text);
@@ -138,10 +125,4 @@ const [lead, ...rest] = testimonials;
     align-content: start;
   }
 
-  @media (max-width: 900px) {
-    .proof__head,
-    .proof__grid {
-      grid-template-columns: 1fr;
-    }
-  }
 </style>

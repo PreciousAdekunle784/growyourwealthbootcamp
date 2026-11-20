@@ -53,14 +53,20 @@ const channels = [
   }
   .support__list li {
     display: grid;
-    grid-template-columns: 8rem minmax(0, 1fr) minmax(0, 18rem);
-    gap: 8px 32px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    row-gap: 8px;
     align-items: baseline;
     padding: 28px 0;
     border-bottom: 1px solid var(--line);
   }
   .support__k {
+    grid-column: 1 / span 5;
     color: var(--accent);
+  }
+  .support__v,
+  .support__note {
+    grid-column: 7 / -1;
   }
   .support__v {
     font-size: var(--step-3);
@@ -86,8 +92,10 @@ const channels = [
     align-items: center;
   }
   @media (max-width: 800px) {
-    .support__list li {
-      grid-template-columns: 1fr;
+    .support__k,
+    .support__v,
+    .support__note {
+      grid-column: 1 / -1;
     }
   }
 </style>

@@ -7,8 +7,8 @@ import Folio from './Folio.astro';
 <section class="section faq" id="questions" aria-labelledby="faq-title">
   <div class="wrap">
     <Folio num="08" label="Questions" />
-    <div class="faq__grid">
-      <div class="faq__aside">
+    <div class="cols cols--start section-head">
+      <div class="c-l faq__aside">
         <h2 id="faq-title" class="display h2" data-lines>
           <span class="line" style="--i:0"><span>Questions,</span></span>
           <span class="line" style="--i:1"><span><em>answered.</em></span></span>
@@ -20,7 +20,7 @@ import Folio from './Folio.astro';
         </p>
       </div>
 
-      <div class="faq__list">
+      <div class="c-r faq__list">
         {
           faqs.map((f, i) => (
             <details class="qa" data-reveal style={`--i:${Math.min(i, 5)}`}>
@@ -41,13 +41,6 @@ import Folio from './Folio.astro';
 </section>
 
 <style>
-  .faq__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(40px, 6vw, 120px);
-    margin-top: clamp(40px, 5vw, 72px);
-    align-items: start;
-  }
   .faq__aside {
     position: sticky;
     top: calc(var(--header-h) + 40px);
@@ -130,9 +123,6 @@ import Folio from './Folio.astro';
   }
 
   @media (max-width: 900px) {
-    .faq__grid {
-      grid-template-columns: 1fr;
-    }
     .faq__aside {
       position: static;
     }

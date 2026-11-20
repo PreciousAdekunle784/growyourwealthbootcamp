@@ -20,7 +20,7 @@ const layers = [...method].reverse();
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero__grid wrap">
+  <div class="hero__grid wrap cols">
     <div class="hero__copy">
       <p class="hero__kicker mono" data-reveal style="--i:0">
         The Grow Your Wealth Bootcamp <span aria-hidden="true">—</span> one day, with Noelle Randall
@@ -79,7 +79,7 @@ const layers = [...method].reverse();
     </div>
   </div>
 
-  <dl class="hero__ledger wrap" aria-label="Bootcamp at a glance">
+  <dl class="hero__ledger wrap cols" aria-label="Bootcamp at a glance">
     {
       ledger.map((row, i) => (
         <div class="hero__ledger-row" data-reveal style={`--i:${i + 6}`}>
@@ -97,12 +97,11 @@ const layers = [...method].reverse();
     padding-top: calc(var(--header-h) + clamp(24px, 4vw, 56px));
   }
   .hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-    gap: clamp(24px, 4vw, 64px);
     align-items: end;
+    row-gap: 0;
   }
   .hero__copy {
+    grid-column: 1 / span 6;
     padding-bottom: clamp(32px, 5vw, 72px);
     position: relative;
     z-index: 2;
@@ -114,8 +113,8 @@ const layers = [...method].reverse();
     max-width: 44ch;
   }
   .hero__title {
-    /* Widest line measures 7.9× its font size: size to the column so it never clips. */
-    font-size: min(12.3cqi, 7.4rem);
+    /* Widest line measures 6.6× its font size: size to the column so it never clips. */
+    font-size: min(14.6cqi, 7.6rem);
     line-height: 0.95;
     letter-spacing: -0.035em;
     text-wrap: initial;
@@ -147,6 +146,7 @@ const layers = [...method].reverse();
 
   /* The composition: Noelle standing on the capital stack, on ledger paper. */
   .hero__art {
+    grid-column: 7 / -1;
     position: relative;
     align-self: stretch;
     min-height: clamp(520px, 64vw, 860px);
@@ -156,7 +156,7 @@ const layers = [...method].reverse();
   }
   .hero__paper {
     position: absolute;
-    inset: 6% 0 0 8%;
+    inset: 6% 0 0 0;
     background:
       repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px),
       var(--paper-2);
@@ -178,7 +178,6 @@ const layers = [...method].reverse();
     position: relative;
     z-index: 2;
     display: grid;
-    margin-left: 8%;
   }
   .stack__layer {
     display: flex;
@@ -207,26 +206,20 @@ const layers = [...method].reverse();
     line-height: 1;
   }
   .stack__label {
-    font-family: var(--font-mono);
+    font-family: var(--font-label);
+    font-weight: 600;
     font-size: 0.76rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
   .hero__ledger {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    row-gap: 0;
   }
   .hero__ledger-row {
-    padding: 20px 20px 22px 0;
+    grid-column: span 3;
+    padding: 18px 0 22px;
     border-top: 1px solid var(--line-strong);
-    border-right: 1px solid var(--line);
-  }
-  .hero__ledger-row + .hero__ledger-row {
-    padding-left: 20px;
-  }
-  .hero__ledger-row:last-child {
-    border-right: 0;
   }
   .hero__ledger dt {
     color: var(--muted);
@@ -242,8 +235,9 @@ const layers = [...method].reverse();
   }
 
   @media (max-width: 900px) {
-    .hero__grid {
-      grid-template-columns: 1fr;
+    .hero__copy,
+    .hero__art {
+      grid-column: 1 / -1;
     }
     .hero__copy {
       padding-bottom: 8px;
@@ -264,14 +258,8 @@ const layers = [...method].reverse();
     .stack {
       margin-left: 0;
     }
-    .hero__ledger {
-      grid-template-columns: 1fr 1fr;
-    }
-    .hero__ledger-row:nth-child(2) {
-      border-right: 0;
-    }
-    .hero__ledger-row + .hero__ledger-row:nth-child(3) {
-      padding-left: 0;
+    .hero__ledger-row {
+      grid-column: span 6;
     }
     .hero__ledger-row:nth-child(n + 3) {
       border-top-color: var(--line);

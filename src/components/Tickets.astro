@@ -8,11 +8,11 @@ import Arrow from './Arrow.astro';
   <div class="wrap">
     <Folio num="07" label="Tickets" />
 
-    <div class="tickets__head">
-      <h2 id="tickets-title" class="display h2" data-lines>
+    <div class="cols cols--end section-head">
+      <h2 id="tickets-title" class="c-l display h2" data-lines>
         <span class="line" style="--i:0"><span>Two ways <em>in.</em></span></span>
       </h2>
-      <p class="lede" data-reveal style="--i:1">
+      <p class="c-r lede" data-reveal style="--i:1">
         {
           isSelling
             ? `Choose your ticket for ${formatDate(event.nextDate)}. You'll select your tier at checkout.`
@@ -21,7 +21,7 @@ import Arrow from './Arrow.astro';
       </p>
     </div>
 
-    <div class="tickets__grid">
+    <div class="cols tickets__grid section-body">
       {
         tiers.map((t, i) => (
           <article
@@ -67,20 +67,20 @@ import Arrow from './Arrow.astro';
       }
     </div>
 
-    <p class="tickets__policy" data-reveal>
+    <div class="cols"><p class="c-r tickets__policy" data-reveal>
       Event tickets are non-refundable. Ticket holders get replay access after the event, and tickets may be eligible
       for store credit or transfer to a future event. <a href="/refund-policy">Read the full refund policy</a>.
-    </p>
+    </p></div>
 
-    <div class="partners" data-reveal>
-      <div class="partners__intro">
+    <div class="partners cols" data-reveal>
+      <div class="c-l partners__intro">
         <p class="mono partners__label">Partner offers for attendees</p>
         <p class="partners__body">
           Attendees get access to offers from companies working in funding, credit, banking and real estate. Some links
           are affiliate links; <a href="/disclaimer#affiliates">see disclosure</a>.
         </p>
       </div>
-      <ul role="list" class="partners__list">
+      <ul role="list" class="c-r partners__list">
         {
           partners.map((p) => (
             <li>
@@ -98,19 +98,11 @@ import Arrow from './Arrow.astro';
 </section>
 
 <style>
-  .tickets__head {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 96px);
-    align-items: end;
-    margin-top: clamp(40px, 5vw, 72px);
-  }
   .tickets__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-    gap: clamp(20px, 3vw, 40px);
-    margin-top: clamp(48px, 6vw, 88px);
     align-items: stretch;
+  }
+  .tickets__grid > .ticket {
+    grid-column: span 6;
   }
 
   .ticket {
@@ -231,9 +223,6 @@ import Arrow from './Arrow.astro';
   }
 
   .partners {
-    display: grid;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-    gap: clamp(32px, 5vw, 96px);
     margin-top: clamp(80px, 9vw, 140px);
     padding-top: 28px;
     border-top: 1px solid var(--line-strong);
@@ -249,8 +238,8 @@ import Arrow from './Arrow.astro';
   }
   .partners__list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 24px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--col-gap);
   }
   .partners__list a {
     display: grid;
@@ -273,13 +262,8 @@ import Arrow from './Arrow.astro';
   }
 
   @media (max-width: 900px) {
-    .tickets__head,
-    .tickets__grid,
-    .partners {
-      grid-template-columns: 1fr;
-    }
-    .partners__list {
-      grid-template-columns: 1fr 1fr;
+    .tickets__grid > .ticket {
+      grid-column: 1 / -1;
     }
   }
   @media (max-width: 480px) {

@@ -13,8 +13,8 @@ const forList = [
 <section class="section audience" id="for" aria-labelledby="for-title">
   <div class="wrap">
     <Folio num="01" label="Who it's for" />
-    <div class="audience__grid">
-      <div class="audience__head">
+    <div class="cols cols--start section-head">
+      <div class="c-l audience__head">
         <h2 id="for-title" class="display h2" data-lines>
           <span class="line" style="--i:0"><span>For the people</span></span>
           <span class="line" style="--i:1"><span>doing the work</span></span>
@@ -26,7 +26,7 @@ const forList = [
         </p>
       </div>
 
-      <ol class="roll" role="list">
+      <ol class="c-r roll" role="list">
         {
           forList.map((item, i) => (
             <li class="roll__item" data-reveal style={`--i:${i}`}>
@@ -38,12 +38,14 @@ const forList = [
       </ol>
     </div>
 
-    <div class="notfor" data-reveal>
-      <p class="notfor__label mono">Not for</p>
-      <p class="notfor__statement display">
-        <span class="strike">another course to collect.</span>
-      </p>
-      <p class="notfor__body">
+    <div class="notfor cols" data-reveal>
+      <div class="c-l">
+        <p class="notfor__label mono">Not for</p>
+        <p class="notfor__statement display">
+          <span class="strike">another course to collect.</span>
+        </p>
+      </div>
+      <p class="c-r notfor__body">
         If you’re only casually interested in business, this isn’t your day. It’s for people who will set up the
         business, build the credit and go after the funding.
       </p>
@@ -52,13 +54,6 @@ const forList = [
 </section>
 
 <style>
-  .audience__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(40px, 6vw, 120px);
-    margin-top: clamp(40px, 5vw, 72px);
-    align-items: start;
-  }
   .audience__head .lede {
     margin-top: 32px;
   }
@@ -83,15 +78,14 @@ const forList = [
 
   .notfor {
     margin-top: clamp(72px, 9vw, 140px);
-    display: grid;
-    grid-template-columns: 8rem minmax(0, 1fr) minmax(0, 28ch);
-    gap: 24px clamp(24px, 4vw, 64px);
-    align-items: baseline;
+    align-items: end;
+    row-gap: 20px;
     padding-top: 28px;
     border-top: 1px solid var(--line-strong);
   }
   .notfor__label {
     color: var(--muted);
+    margin-bottom: 16px;
   }
   .notfor__statement {
     font-size: var(--step-3);
@@ -115,14 +109,9 @@ const forList = [
   }
   .notfor__body {
     color: var(--muted);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    max-width: 44ch;
   }
 
-  @media (max-width: 900px) {
-    .audience__grid {
-      grid-template-columns: 1fr;
-    }
-    .notfor {
-      grid-template-columns: 1fr;
-    }
-  }
 </style>

@@ -13,8 +13,8 @@ import Folio from './Folio.astro';
       <span class="line" style="--i:2"><span>is <em>paying for it.</em></span></span>
     </h2>
 
-    <div class="bottleneck__grid">
-      <div class="prose bottleneck__prose" data-reveal>
+    <div class="cols cols--start section-body">
+      <div class="c-l prose bottleneck__prose" data-reveal>
         <p>
           Savings run out fast, and your personal credit can only carry so much. That’s where most plans to invest stall,
           not for lack of ambition.
@@ -25,7 +25,7 @@ import Folio from './Folio.astro';
         </p>
       </div>
 
-      <div class="routes">
+      <div class="c-r routes">
         <p class="mono routes__head" data-reveal>Funding routes covered on the day</p>
         <ol role="list" class="routes__list">
           {
@@ -51,13 +51,6 @@ import Folio from './Folio.astro';
     margin-top: clamp(40px, 5vw, 72px);
     font-size: var(--step-4);
     text-wrap: balance;
-  }
-  .bottleneck__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(40px, 6vw, 120px);
-    margin-top: clamp(56px, 7vw, 112px);
-    align-items: start;
   }
   .bottleneck__prose {
     color: var(--muted);
@@ -97,9 +90,6 @@ import Folio from './Folio.astro';
   }
 
   @media (max-width: 900px) {
-    .bottleneck__grid {
-      grid-template-columns: 1fr;
-    }
     .bottleneck__prose {
       position: static;
     }

@@ -9,19 +9,19 @@ const layers = [...method].reverse();
 <section class="section method" id="method" aria-labelledby="method-title" data-method data-active="0">
   <div class="wrap">
     <Folio num="03" label="The method" />
-    <div class="method__intro">
-      <h2 id="method-title" class="display h2" data-lines>
+    <div class="cols cols--end section-head">
+      <h2 id="method-title" class="c-l display h2" data-lines>
         <span class="line" style="--i:0"><span>Three moves,</span></span>
         <span class="line" style="--i:1"><span>in the right <em>order.</em></span></span>
       </h2>
-      <p class="lede" data-reveal style="--i:2">
+      <p class="c-r lede" data-reveal style="--i:2">
         Most people try to start at the top, with the property. The bootcamp works from the ground up, one layer on the
         last.
       </p>
     </div>
 
-    <div class="method__grid">
-      <div class="method__visual" aria-hidden="true">
+    <div class="cols section-body">
+      <div class="c-l method__visual" aria-hidden="true">
         <div class="mstack">
           <svg class="mstack__house" viewBox="0 0 240 150" fill="none">
             <path d="M20 148V70L120 6l100 64v78" stroke="currentColor" stroke-width="1.5" pathLength="1" />
@@ -41,7 +41,7 @@ const layers = [...method].reverse();
         </div>
       </div>
 
-      <ol class="steps" role="list">
+      <ol class="c-r steps" role="list">
         {
           method.map((m, i) => (
             <li class="step" data-step={i + 1}>
@@ -75,19 +75,6 @@ const layers = [...method].reverse();
 </section>
 
 <style>
-  .method__intro {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 96px);
-    margin-top: clamp(40px, 5vw, 72px);
-    align-items: end;
-  }
-  .method__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(40px, 6vw, 120px);
-    margin-top: clamp(56px, 7vw, 112px);
-  }
 
   .method__visual {
     position: sticky;
@@ -141,7 +128,8 @@ const layers = [...method].reverse();
     line-height: 1;
   }
   .mstack__label {
-    font-family: var(--font-mono);
+    font-family: var(--font-label);
+    font-weight: 600;
     font-size: 0.78rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -171,7 +159,7 @@ const layers = [...method].reverse();
 
   .step {
     display: grid;
-    grid-template-columns: clamp(4rem, 8vw, 7.5rem) 1fr;
+    grid-template-columns: clamp(3.5rem, 6vw, 5.5rem) 1fr;
     gap: 16px;
     padding: clamp(40px, 6vw, 88px) 0;
     border-top: 1px solid var(--line-strong);
@@ -212,10 +200,6 @@ const layers = [...method].reverse();
   }
 
   @media (max-width: 900px) {
-    .method__intro,
-    .method__grid {
-      grid-template-columns: 1fr;
-    }
     .method__visual {
       position: relative;
       top: 0;

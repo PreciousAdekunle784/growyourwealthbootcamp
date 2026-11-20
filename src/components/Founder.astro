@@ -10,8 +10,8 @@ import Arrow from './Arrow.astro';
   <div class="wrap">
     <Folio num="05" label="Your teacher" />
 
-    <div class="founder__grid">
-      <figure class="founder__figure">
+    <div class="cols cols--start section-head">
+      <figure class="c-l founder__figure">
         <div class="founder__frame" data-mask data-drift="0.04">
           <Image
             src={portrait}
@@ -27,7 +27,7 @@ import Arrow from './Arrow.astro';
         </figcaption>
       </figure>
 
-      <div class="founder__body">
+      <div class="c-r founder__body">
         <h2 id="noelle-title" class="display h2" data-lines>
           <span class="line" style="--i:0"><span>Taught by someone</span></span>
           <span class="line" style="--i:1"><span>who has <em>built it.</em></span></span>
@@ -72,21 +72,16 @@ import Arrow from './Arrow.astro';
       </div>
     </div>
 
-    <blockquote class="founder__quote" data-reveal>
-      <p class="display">{founder.quote}</p>
-      <footer class="mono">— {founder.name}</footer>
-    </blockquote>
+    <div class="cols founder__quote-row">
+      <blockquote class="c-r founder__quote" data-reveal>
+        <p class="display">{founder.quote}</p>
+        <footer class="mono">— {founder.name}</footer>
+      </blockquote>
+    </div>
   </div>
 </section>
 
 <style>
-  .founder__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(40px, 6vw, 120px);
-    margin-top: clamp(40px, 5vw, 72px);
-    align-items: start;
-  }
   .founder__figure {
     position: relative;
   }
@@ -173,9 +168,11 @@ import Arrow from './Arrow.astro';
     margin-top: 40px;
   }
 
+  .founder__quote-row {
+    margin-top: clamp(80px, 10vw, 160px);
+  }
   .founder__quote {
-    margin: clamp(80px, 10vw, 160px) 0 0;
-    padding-left: clamp(0px, 16vw, 240px);
+    margin: 0;
     position: relative;
   }
   .founder__quote p {
@@ -186,11 +183,12 @@ import Arrow from './Arrow.astro';
     max-width: 26ch;
   }
   .founder__quote p::before {
+    /* Hanging quote mark, so the text itself stays on the content axis. */
     content: '“';
     position: absolute;
-    left: clamp(0px, 9vw, 140px);
-    margin-top: -0.12em;
-    font-size: 2.4em;
+    right: calc(100% + 0.12em);
+    top: -0.08em;
+    font-size: 2em;
     line-height: 1;
     color: var(--accent);
     font-style: normal;
@@ -201,9 +199,6 @@ import Arrow from './Arrow.astro';
   }
 
   @media (max-width: 900px) {
-    .founder__grid {
-      grid-template-columns: 1fr;
-    }
     .founder__frame {
       aspect-ratio: 4 / 4.6;
     }
@@ -215,12 +210,12 @@ import Arrow from './Arrow.astro';
       gap: 6px;
     }
     .founder__quote {
-      padding-left: 0;
-      padding-top: 0.9em;
+      padding-top: 0.8em;
     }
     .founder__quote p::before {
+      right: auto;
       left: 0;
-      top: -0.35em;
+      top: -0.3em;
     }
   }
 </style>
